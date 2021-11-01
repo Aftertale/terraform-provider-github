@@ -124,6 +124,12 @@ func resourceGithubActionsRunnerGroupCreate(d *schema.ResourceData, meta interfa
 }
 
 func resourceGithubActionsRunnerGroupRead(d *schema.ResourceData, meta interface{}) error {
+
+	drift := meta.(*Owner).DetectDrift
+	if !drift {
+		return nil
+	}
+
 	err := checkOrganization(meta)
 	if err != nil {
 		return err

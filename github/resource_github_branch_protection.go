@@ -173,6 +173,12 @@ func resourceGithubBranchProtectionCreate(d *schema.ResourceData, meta interface
 }
 
 func resourceGithubBranchProtectionRead(d *schema.ResourceData, meta interface{}) error {
+
+	drift := meta.(*Owner).DetectDrift
+	if !drift {
+		return nil
+	}
+
 	var query struct {
 		Node struct {
 			Node BranchProtectionRule `graphql:"... on BranchProtectionRule"`

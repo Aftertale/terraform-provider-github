@@ -72,6 +72,12 @@ func resourceGithubAppInstallationRepositoryCreate(d *schema.ResourceData, meta 
 }
 
 func resourceGithubAppInstallationRepositoryRead(d *schema.ResourceData, meta interface{}) error {
+
+	drift := meta.(*Owner).DetectDrift
+	if !drift {
+		return nil
+	}
+
 	err := checkOrganization(meta)
 	if err != nil {
 		return err
