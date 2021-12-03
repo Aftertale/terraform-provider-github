@@ -57,6 +57,11 @@ func flattenAndSetRequiredStatusChecks(d *schema.ResourceData, protection *githu
 }
 
 func requireSignedCommitsRead(d *schema.ResourceData, meta interface{}) error {
+	drift := meta.(*Owner).DetectDrift
+	if !drift {
+		return nil
+	}
+
 	client := meta.(*Owner).v3client
 
 	repoName, branch, err := parseTwoPartID(d.Id(), "repository", "branch")
